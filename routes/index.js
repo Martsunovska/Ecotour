@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 /* GET countries page. */
 router.get('/countries', function(req, res, next) {
-    res.render('countries', { title: 'Express2' });
+    res.render('countries', { title: 'Countries' });
 });
 
 /* GET prices page. */
