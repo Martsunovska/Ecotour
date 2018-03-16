@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body onload="demo()">
+    <script>
+        function demo() {
+            var str1 = "<table border=1, cellspacing=0> ";
+            for (var i = 1; i < 6; i++) {
+                var str3 = "";
+                switch (i) {
+                    case 1:
+                    case 5:
+                        for (var j = 1; j < 6; j++)
+                            str3 += "<td>" + (((j === 1) || (j === 5)) ? "+" : "") + "</td>";
+                        break;
+                    case 2:
+                    case 4:
+                        for (var j = 1; j < 6; j++)
+                            str3 += "<td>" + (((j === 2) || (j === 4)) ? "*" : "") + "</td>";
+                        break;
+                    case 3:
+                        for (var j = 1; j < 6; j++)
+                            str3 += "<td>" + ((j === 3) ? "*" : "") + "</td>";
+                        break;
+                }
+                str1 += ("<tr>" + str3 + "</tr>");
+            }
+            var bodyElement = document.getElementsByTagName("body")[0];
+            bodyElement.innerHTML += (str1 + "</table>");
+        }
+    </script>
+</body>
+
+</html>
