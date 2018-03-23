@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var browserify = require('browserify-middleware');
+var mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -23,18 +24,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.get('/javascripts/bundle.js', browserify('./client/script.js'));
+var dbConnectionStr = 'mongodb://localhost:27017/ecotour2018';
+mongoose.connect(dbConnectionStr);
 
 if (app.get('env') == 'development') {
-  var browserSync = require('browser-sync');
-  var config = {
-    files: ["public/**/*.{js,css}", "client/*.js", "sass/**/*.scss", "views/**/*.hbs"],
-    logLevel: 'debug',
-    logSnippet: false,
-    reloadDelay: 3000,
-    reloadOnRestart: true
-  };
-  var bs = browserSync(config);
-  app.use(require('connect-browser-sync')(bs));
+    var browserSync = require('browser-sync');
+    var config = {
+        files: ["public/**/*.{js,css}", "client/*.js", "sass/**/*.scss", "views/**/*.hbs"],
+        logLevel: 'debug',
+        logSnippet: false,
+        reloadDelay: 3000,
+        reloadOnRestart: true
+    };
+    var bs = browserSync(config);
+    app.use(require('connect-browser-sync')(bs));
 }
 
 app.use('/', index);
@@ -42,20 +45,20 @@ app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

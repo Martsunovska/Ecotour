@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var Country = require('../models/country');
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express1' });
@@ -8,7 +8,24 @@ router.get('/', function(req, res, next) {
 
 /* GET countries page. */
 router.get('/countries', function(req, res, next) {
-    let countries = [{
+    Country.find(function(err, countries) {
+        if (err /* !=null */ ) return console.err(err);
+        res.render('countries', { title: 'Країни', countries: countries });
+    });
+});
+
+/* GET prices page. */
+router.get('/prices', function(req, res, next) {
+    res.render('prices', { title: 'Express3' });
+});
+
+/* GET contacts page. */
+router.get('/contacts', function(req, res, next) {
+    res.render('contacts', { title: 'Express4' });
+});
+
+router.get("/setup-db", function(reg, res) {
+    var countries = [{
             Name: "ФРАНЦІЯ",
             Desc: "Фра́нція, офіційна назва Францу́зька Респу́бліка (фр. La France, République française) — держава на заході Європи, республіка, що межує на північному сході з Бельгією, Люксембургом і Німеччиною, на сході з Німеччиною, Швейцарією, південному-заході з Іспанією й Андоррою, на південному-сході з Італією та Монако на півдні омивається Середземним морем, на заході — Атлантичним океаном.",
             Image: "/images/france.jpg"
@@ -39,17 +56,22 @@ router.get('/countries', function(req, res, next) {
             Image: "/images/Scottish.jpg"
         }
     ];
-    res.render('countries', { title: 'Країни', countries: countries });
-});
 
-/* GET prices page. */
-router.get('/prices', function(req, res, next) {
-    res.render('prices', { title: 'Express3' });
-});
+    Country.remove({}, function(err) { /* переписати викинути і написати цикл по масиву щоб вставити країни*/
+        if (err) {
+            console.error(err);
+        } else
+            Country.insertMany(countries, function(err, docs) { /* переписати цей код за допомогою циклу */
+                if (err) {
+                    console.error(err);
+                } else
+                    console.log('Inserted' + docs.length);
+            });
+    });
 
-/* GET contacts page. */
-router.get('/contacts', function(req, res, next) {
-    res.render('contacts', { title: 'Express4' });
+    res.status(200).json({
+        message: "Okay",
+    });
 });
 
 module.exports = router;
