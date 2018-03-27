@@ -16,7 +16,7 @@ router.get('/countries', function(req, res, next) {
 
 router.get("/setup-db", function(reg, res) {
     var countries = [{
-            Name: "ФРАНЦІЯ",
+            Name: "ФРАНЦІЯ1",
             Desc: "Фра́нція — держава на заході Європи, республіка, що межує на північному сході з Бельгією, Люксембургом і Німеччиною, на сході з Німеччиною, Швейцарією, південному-заході з Іспанією й Андоррою, на південному-сході з Італією та Монако на півдні омивається Середземним морем, на заході — Атлантичним океаном.",
             Image: "/images/france.jpg"
         },
@@ -49,22 +49,30 @@ router.get("/setup-db", function(reg, res) {
 
 
 
-    Country.remove({}, function(err) { /* переписати викинути і написати цикл по масиву щоб вставити країни*/
+    Country.remove({}, function(err) {
         if (err) {
             console.error(err);
-        } else
-        /* {
-                   for (var i = 0; i < countries.length; i++) {
-                       document.write(countries[i].Name + countries[i].Desc + countries[i].Image);
-                   };
-               }; */
-            Country.insertMany(countries, function(err, docs) { /* переписати цей код за допомогою циклу  */
+        } else {
+            /* Country.insertMany(countries, function(err, docs) { /* переписати цей код за допомогою циклу  
             if (err) {
                 console.error(err);
             } else
                 console.log('Inserted' + docs.length);
-        });
+        }); */
+            for (let i = 0; i < countries.length; i++) {
+                Country.create(countries[i], function(err, c) {
+                    if (err)
+                        console.error('Error:' + err);
+                    else
+                        console.log(c);
+                });
+            };
+
+        };
     });
+
+
+
 
     res.status(200).json({
         message: "Okay",
