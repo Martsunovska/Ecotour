@@ -16,3 +16,11 @@ p {
 h3 {
     text-align: center;
 }
+
+td {
+    width: 150;
+}
+
+th {
+    text-align: center;
+}

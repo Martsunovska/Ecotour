@@ -12,11 +12,27 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/countries', function(req, res, next) {
-
-    res.render('admin/countries', { layout: 'admin/layout', title: 'Add country' });
+    Country.find({}, function(err, countries) {
+        if (err) {
+            console.error('Error: ' + err);
+            res.render('admin/country-res', {
+                title: 'Error І',
+                message: err
+            });
+        } else {
+            res.render('admin/countries', {
+                layout: 'admin/layout',
+                title: 'Add country',
+                countries: countries
+            });
+        }
+    });
+});
+router.get('/countries-add', function(req, res, next) { //Додати країну    
+    res.render('admin/countries-add', { layout: 'admin/layout', title: 'Add country' });
 });
 
-router.post('/countries', function(req, res) { //виводимо повідомлення про вдале чи невдале введення країни
+router.post('/countries-add', function(req, res) { //виводимо повідомлення про вдале чи невдале введення країни
     Country.remove({ Name: req.body.countryName }, function(err) {
         if (err) {
             console.error(err);
