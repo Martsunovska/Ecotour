@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
+var apiV1 = require('./routes/apiv1');
 
 var app = express();
 
@@ -44,6 +45,7 @@ if (app.get('env') == 'development') {
 app.use('/', index);
 app.use('/users', users);
 app.use('/admin', admin);
+app.use('/api/v1', apiV1);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

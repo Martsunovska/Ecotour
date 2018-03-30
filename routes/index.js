@@ -8,10 +8,12 @@ router.get('/', function(req, res, next) {
 
 /* GET countries page. */
 router.get('/countries', function(req, res, next) {
-    Country.find(function(err, countries) {
-        if (err /* !=null */ ) return console.err(err);
-        res.render('countries', { title: 'Країни', countries: countries });
-    });
+    res.render('countries', { title: 'Ajax Demo', layout: 'layout1' })
+
+    /*  Country.find(function(err, countries) {
+         if (err /* !=null ) return console.err(err);
+         res.render('countries', { title: 'Країни', countries: countries });
+     }); */
 });
 
 router.get("/setup-db", function(reg, res) {
