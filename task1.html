@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body onload="demo()">
+    <script type="text/javascript">
+        function demo() {
+            var table = '<table border=1>';
+            for (var i = 1; i <= 5; i++) {
+                table += '<tr>';
+                for (var j = 1; j <= 5; j++) {
+                    if ((i === 3) && (j === 3) || (i === 2) && (j === 2) || (i === 2) && (j === 4) || (i === 4) && (j === 4) || (i === 4) && (j === 2)) {
+                        table += "<td>" + "*" + "</td>";
+                    } else
+                    if ((i === 1) && (j === 1) || (i === 5) && (j === 5) || (i === 1) && (j === 5) || (i === 5) && (j === 1)) {
+                        table += "<td>" + "+" + "</td>";
+                    } else {
+                        table += "<td>" + "" + "</td>";
+                    }
+                }
+                table += '</tr>';
+            }
+            table += '</table>';
+            document.getElementById('table').innerHTML = table;
+        }
+    </script>
+
+    <div id="table"></div>
+</body>
+
+</html>

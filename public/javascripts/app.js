@@ -1,4 +1,4 @@
-/* $(document).ready(function() {
+$(document).ready(function() {
     $.getJSON("/api/v1/countries", function(data) {
         var str = '';
         $.each(data, function(key, val) {
@@ -13,4 +13,4 @@
             html: err
         }).appendTo("div.container")
     });
-}); */
+});
