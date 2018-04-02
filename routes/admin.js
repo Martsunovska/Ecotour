@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Country = require('../models/country');
+var Hotel = require('../models/hotel');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -11,43 +11,43 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get('/countries', function(req, res, next) {
-    Country.find({}, function(err, countries) {
+router.get('/hotels', function(req, res, next) {
+    Hotel.find({}, function(err, hotels) {
         if (err) {
             console.error('Error: ' + err);
-            res.render('admin/country-res', {
+            res.render('admin/hotels-res', {
                 title: 'Error І',
                 message: err
             });
         } else {
-            res.render('admin/countries', {
+            res.render('admin/hotels', {
                 layout: 'admin/layout',
-                title: 'Add country',
-                countries: countries
+                title: 'Add hotel',
+                hotels: hotels
             });
         }
     });
 });
-router.get('/countries-add', function(req, res, next) { //Додати країну    
-    res.render('admin/countries-add', { layout: 'admin/layout', title: 'Add country' });
+router.get('/hotels-add', function(req, res, next) {
+    res.render('admin/hotels-add', { layout: 'admin/layout', title: 'Add hotel' });
 });
 
-router.post('/countries-add', function(req, res) { //виводимо повідомлення про вдале чи невдале введення країни
-    Country.remove({ Name: req.body.countryName }, function(err) {
+router.post('/hotels-add', function(req, res) { //виводимо повідомлення про вдале чи невдале введення
+    Hotel.remove({ Name: req.body.hotelName }, function(err) {
         if (err) {
             console.error(err);
-            res.render('admin/country-res', { layout: 'admin/layout', title: 'Error!', message: err });
+            res.render('admin/hotels-res', { layout: 'admin/layout', title: 'Error!', message: err });
         } else {
-            Country.create({
-                Name: req.body.countryName,
-                Desc: req.body.countryDescription,
+            Hotel.create({
+                Name: req.body.hotelName,
+                Desc: req.body.hotelDescription,
                 Image: req.body.ImageUrl
             }, function(err, c) {
                 if (err) {
                     console.error('Error:' + err);
-                    res.render('admin/country-res', { layout: 'admin/layout', title: 'Error!', message: err });
+                    res.render('admin/hotels-res', { layout: 'admin/layout', title: 'Error!', message: err });
                 } else
-                    res.render('admin/country-res', { layout: 'admin/layout', title: 'Super!', message: 'Country added to DB succesfully' });
+                    res.render('admin/hotels-res', { layout: 'admin/layout', title: 'Super!', message: 'Hotel added to DB succesfully' });
             });
         };
     });

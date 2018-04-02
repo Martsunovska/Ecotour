@@ -10,7 +10,6 @@ var mongoose = require('mongoose');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
-var apiV1 = require('./routes/apiv1');
 
 var app = express();
 
@@ -26,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //app.get('/javascripts/bundle.js', browserify('./client/script.js'));
-var dbConnectionStr = 'mongodb://localhost:27017/ecotour2018';
+var dbConnectionStr = 'mongodb://localhost:27017/hotels';
 mongoose.connect(dbConnectionStr);
 
 if (app.get('env') == 'development') {
@@ -45,7 +44,6 @@ if (app.get('env') == 'development') {
 app.use('/', index);
 app.use('/users', users);
 app.use('/admin', admin);
-app.use('/api/v1', apiV1);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
