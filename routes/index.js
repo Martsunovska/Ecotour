@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Country = require('../models/country');
+const nodemailer = require('nodemailer');
 /* GET home page. */
 router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express1' });
@@ -88,9 +89,40 @@ router.get('/prices', function(req, res, next) {
 
 /* GET contacts page. */
 router.get('/contacts', function(req, res, next) {
-    res.render('contacts', { title: 'Express4' });
+    res.render('contacts', { title: 'Contacts Us' });
 });
 
+router.post('/contacts', function(req, res, next) {
+    //відправка листа //експериментувати з полем TO. дві адреси.
+    var message = {
+        from: req.body.email,
+        to: 'vip@lasunkaplus.com, alrami_07@mail.ru',
+        subject: 'Message from Ecotour [' + req.body.name + ']',
+        text: req.body.message,
+        html: '<p>' + req.body.message + '</p>'
+    };
+    console.log(message);
+    // res.render('contacts-res', { title: 'Contacts Us' });
+    if (req.body.human === "5") {
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: "chinatsu079@gmail.com",
+                pass: ""
+            }
+        });
+        // send mail with defined transport object
+        transporter.sendMail(message, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log(info);
+            res.render('contacts-res', { title: 'Contacts:', message: "Лист віправлено!" })
+        });
 
+    } else {
+        res.render('contacts-res', { title: 'Contacts Us', message: "Ви мабуть робот!" });
+    }
+});
 
 module.exports = router;
