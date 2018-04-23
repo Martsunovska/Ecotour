@@ -1,6 +1,25 @@
 const mongoose = require('mongoose'),
     Country = mongoose.model('Country');
 
+/* mongoose.controller("countryController", [
+            "$scope", "$http",
+            function($scope, $http) {
+                $scope.model = {
+
+                };
+
+                $scope.getCountries = getCountries,
+
+                function getCountries() {
+                    $http.get("api/v1")
+                        .then(function(response) {
+                            $scope.model.repos = response.data;
+                        }, function(response) {
+                            $scope.model.repos = "Error: " + response.data.message;
+                        });
+                }
+            ]) */
+
 module.exports = {
     all: function(req, res) {
         Country.find({})

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Country = require('../models/country');
 
-/* GET users listing. */
+
 router.get('/', function(req, res, next) {
     //вивести меню з усіма можливими функціями
     res.render('admin/index', {
